@@ -26,7 +26,9 @@ import {
   Bookmark,
   Volume2,
   AtSign,
-  Send
+  Send,
+  Copy,
+  Check
 } from 'lucide-react';
 
 interface Product {
@@ -237,8 +239,10 @@ export default function App() {
 
           // Refresh
           await fetchDictionary();
-          setSearchTerm('');
-          alert("Frasa berhasil ditambahkan ke kamus!");
+          // Don't clear search term so user can see the result
+          // setSearchTerm(''); 
+          setIsGeneratingDictionary(false);
+          // alert("Frasa berhasil ditambahkan ke kamus!");
         } catch (parseError) {
           console.error("JSON Parse Error:", parseError, "Text:", text);
           alert("Maaf, AI memberikan format yang salah. Coba kata lain.");
@@ -799,6 +803,7 @@ function KamusGaul({
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [showDownloadModal, setShowDownloadModal] = useState(false);
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [copiedId, setCopiedId] = useState<number | null>(null);
 
   useEffect(() => {
     const bookmarked = localStorage.getItem('cianna_dictionary_bookmarked');
@@ -863,6 +868,12 @@ function KamusGaul({
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'zh-TW';
     window.speechSynthesis.speak(utterance);
+  };
+
+  const handleCopy = (text: string, id: number) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
   };
 
   const content = (
@@ -1004,12 +1015,21 @@ function KamusGaul({
                       <div className="text-3xl font-bold text-kr-text mb-1">{item.mandarin}</div>
                       <div className="text-sm font-mono text-kr-accent italic">{item.pronunciation}</div>
                     </div>
-                    <button 
-                      onClick={() => playAudio(item.mandarin)}
-                      className="w-12 h-12 rounded-full bg-kr-mint flex items-center justify-center text-kr-text hover:bg-kr-mint/80 transition-colors shadow-soft"
-                    >
-                      <Volume2 className="w-6 h-6" />
-                    </button>
+                    <div className="flex gap-2">
+                      <button 
+                        onClick={() => handleCopy(`${item.mandarin} (${item.pronunciation}) - ${item.indo}`, item.id)}
+                        className="w-12 h-12 rounded-full bg-white border border-kr-mint/30 flex items-center justify-center text-kr-text hover:bg-kr-bg transition-colors shadow-soft"
+                        title="Salin ke Clipboard"
+                      >
+                        {copiedId === item.id ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
+                      </button>
+                      <button 
+                        onClick={() => playAudio(item.mandarin)}
+                        className="w-12 h-12 rounded-full bg-kr-mint flex items-center justify-center text-kr-text hover:bg-kr-mint/80 transition-colors shadow-soft"
+                      >
+                        <Volume2 className="w-6 h-6" />
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               )}
