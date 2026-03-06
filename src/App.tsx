@@ -201,6 +201,19 @@ export default function App() {
             throw new Error("Incomplete data from AI");
           }
 
+          // Prevent duplicates: Check if already exists in local state
+          const isDuplicate = dictionary.some(item => 
+            item.indo.toLowerCase() === newPhrase.indo.toLowerCase() || 
+            item.mandarin === newPhrase.mandarin
+          );
+
+          if (isDuplicate) {
+            setSearchTerm('');
+            setIsGeneratingDictionary(false);
+            alert("Frasa ini sudah ada di kamus kamu! ✨");
+            return;
+          }
+
           // Save to Supabase or Local API
           if (supabase) {
             const { error: saveError } = await supabase
