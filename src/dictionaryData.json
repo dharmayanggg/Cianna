@@ -1,0 +1,142 @@
+[
+  {
+    "category": "Greeting & Daily Life",
+    "indo": "Halo / Apa kabar?",
+    "mandarin": "你好 / 你好嗎？",
+    "hokkien": "Lí hó / Lí hó-bô?",
+    "pronunciation": "Nǐ hǎo / Nǐ hǎo ma? (M) | Lí hó / Lí hó-bô? (H)"
+  },
+  {
+    "category": "Greeting & Daily Life",
+    "indo": "Sudah makan belum?",
+    "mandarin": "你吃飯了嗎？",
+    "hokkien": "Lí chia̍h-pá-bē?",
+    "pronunciation": "Nǐ chī fàn le ma? (M) | Lí chia̍h-pá-bē? (H)"
+  },
+  {
+    "category": "Greeting & Daily Life",
+    "indo": "Terima kasih",
+    "mandarin": "謝謝",
+    "hokkien": "Tó-siā / Kám-siā",
+    "pronunciation": "Xièxiè (M) | Tó-siā / Kám-siā (H)"
+  },
+  {
+    "category": "Greeting & Daily Life",
+    "indo": "Sama-sama",
+    "mandarin": "不客氣",
+    "hokkien": "Bián kheh-khì",
+    "pronunciation": "Bù kèqì (M) | Bián kheh-khì (H)"
+  },
+  {
+    "category": "Working with Elderly",
+    "indo": "Kakek, waktunya minum obat",
+    "mandarin": "阿公，該吃藥了",
+    "hokkien": "A-kong, tio̍h-ai chia̍h-io̍h lo͘",
+    "pronunciation": "Āgōng, gāi chī yào le (M) | A-kong, tio̍h-ai chia̍h-io̍h lo͘ (H)"
+  },
+  {
+    "category": "Working with Elderly",
+    "indo": "Nenek, mau ke kamar mandi?",
+    "mandarin": "阿嬤，要去洗手間嗎？",
+    "hokkien": "A-má, beh khì chhiú-chiah-kan bô?",
+    "pronunciation": "Āmā, yào qù xǐshǒujiān ma? (M) | A-má, beh khì chhiú-chiah-kan bô? (H)"
+  },
+  {
+    "category": "Working with Elderly",
+    "indo": "Pelan-pelan saja",
+    "mandarin": "慢慢來",
+    "hokkien": "Bān-bān-lâi",
+    "pronunciation": "Mànman lái (M) | Bān-bān-lâi (H)"
+  },
+  {
+    "category": "Food & Shopping",
+    "indo": "Berapa harganya?",
+    "mandarin": "多少錢？",
+    "hokkien": "Gōa-chōe chîⁿ?",
+    "pronunciation": "Duōshǎo qián? (M) | Gōa-chōe chîⁿ? (H)"
+  },
+  {
+    "category": "Food & Shopping",
+    "indo": "Terlalu mahal",
+    "mandarin": "太貴了",
+    "hokkien": "Siūⁿ khùi lo͘",
+    "pronunciation": "Tài guì le (M) | Siūⁿ khùi lo͘ (H)"
+  },
+  {
+    "category": "Slang & Emotions",
+    "indo": "Capek banget",
+    "mandarin": "累死了",
+    "hokkien": "Thiám-kah beh-sí",
+    "pronunciation": "Lèi sǐ le (M) | Thiám-kah beh-sí (H)"
+  },
+  {
+    "category": "Slang & Emotions",
+    "indo": "Mantap / Hebat",
+    "mandarin": "厲害 / 很讚",
+    "hokkien": "Lī-hāi / Chin chán",
+    "pronunciation": "Lìhài / Hěn zàn (M) | Lī-hāi / Chin chán (H)"
+  },
+  {
+    "category": "Greeting & Daily Life",
+    "indo": "Selamat pagi",
+    "mandarin": "早安",
+    "hokkien": "Gâu-chá",
+    "pronunciation": "Zǎo ān (M) | Gâu-chá (H)"
+  },
+  {
+    "category": "Greeting & Daily Life",
+    "indo": "Hati-hati di jalan",
+    "mandarin": "路上小心",
+    "hokkien": "Lō͘-siāng sió-sim",
+    "pronunciation": "Lùshàng xiǎoxīn (M) | Lō͘-siāng sió-sim (H)"
+  },
+  {
+    "category": "Working with Elderly",
+    "indo": "Apakah sakit?",
+    "mandarin": "會痛嗎？",
+    "hokkien": "Ē thàng bô?",
+    "pronunciation": "Huì tòng ma? (M) | Ē thàng bô? (H)"
+  },
+  {
+    "category": "Working with Elderly",
+    "indo": "Tunggu sebentar",
+    "mandarin": "等一下",
+    "hokkien": "Tán-chit-ē",
+    "pronunciation": "Děng yīxià (M) | Tán-chit-ē (H)"
+  },
+  {
+    "category": "Food & Shopping",
+    "indo": "Saya mau ini",
+    "mandarin": "我要這個",
+    "hokkien": "Góa beh chit-ê",
+    "pronunciation": "Wǒ yào zhège (M) | Góa beh chit-ê (H)"
+  },
+  {
+    "category": "Food & Shopping",
+    "indo": "Enak sekali",
+    "mandarin": "很好吃",
+    "hokkien": "Chin hó-chia̍h",
+    "pronunciation": "Hěn hào chī (M) | Chin hó-chia̍h (H)"
+  },
+  {
+    "category": "Emergency & Health",
+    "indo": "Tolong!",
+    "mandarin": "救命！",
+    "hokkien": "Kiù-miā!",
+    "pronunciation": "Jiùmìng! (M) | Kiù-miā! (H)"
+  },
+  {
+    "category": "Emergency & Health",
+    "indo": "Saya pusing",
+    "mandarin": "我頭暈",
+    "hokkien": "Góa thâu-hūn",
+    "pronunciation": "Wǒ tóuyūn (M) | Góa thâu-hūn (H)"
+  },
+  {
+    "category": "Slang & Emotions",
+    "indo": "Jangan marah",
+    "mandarin": "不要生氣",
+    "hokkien": "Mài siong-khì",
+    "pronunciation": "Bùyào shēngqì (M) | Mài siong-khì (H)"
+  }
+]
