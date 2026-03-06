@@ -617,7 +617,9 @@ export default function App() {
       </AnimatePresence>
 
       {/* Global AI Chatbox - Only on unlocked content pages */}
-      {currentPage === 'content' && <AIChatbox />}
+      {currentPage === 'content' && (
+        <AIChatbox mode={unlockedContent?.product.id === 1 ? 'dictionary' : 'general'} />
+      )}
     </div>
   );
 }
@@ -633,7 +635,7 @@ const supabase = (supabaseUrl && supabaseAnonKey) ? createClient(supabaseUrl, su
 // Initialize Gemini
 const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 
-function AIChatbox() {
+function AIChatbox({ mode = 'general' }: { mode?: 'general' | 'dictionary' }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: 'user' | 'ai', text: string }[]>([]);
   const [input, setInput] = useState('');
@@ -647,9 +649,16 @@ function AIChatbox() {
     setLoading(true);
 
     try {
+      const systemPrompt = mode === 'dictionary' 
+        ? `Kamu adalah asisten Kamus Ci Anna. Jawablah pertanyaan seputar arti kata atau frasa Mandarin secara LANGSUNG dan SINGKAT. 
+           JANGAN gunakan salam pembuka (seperti Halo, Hai, Saya asisten, dll). 
+           JANGAN memperkenalkan diri lagi. 
+           Langsung berikan arti, cara baca (pinyin), dan contoh penggunaan jika perlu.`
+        : `Kamu adalah asisten Ci Anna. Jawablah pertanyaan seputar frasa Mandarin atau budaya Taiwan dengan ramah.`;
+
       const result = await genAI.models.generateContent({
         model: "gemini-3-flash-preview",
-        contents: [{ role: 'user', parts: [{ text: `Kamu adalah asisten Ci Anna. Jawablah pertanyaan seputar frasa Mandarin atau budaya Taiwan dengan singkat, tepat, dan ramah. 
+        contents: [{ role: 'user', parts: [{ text: `${systemPrompt}
         
         ATURAN PENTING:
         1. JANGAN gunakan format markdown bold (tanda bintang **). 
@@ -700,7 +709,9 @@ function AIChatbox() {
             <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-kr-bg/30">
               {messages.length === 0 && (
                 <div className="text-center text-kr-text-light text-sm mt-10">
-                  Halo! Aku asisten AI Ci Anna. <br/> Tanya apa saja seputar frasa Mandarin ya!
+                  {mode === 'dictionary' 
+                    ? "Tanya arti kata atau frasa Mandarin apa saja di sini! ✨" 
+                    : "Halo! Aku asisten AI Ci Anna. Tanya apa saja seputar frasa Mandarin ya!"}
                 </div>
               )}
               {messages.map((msg, i) => (
