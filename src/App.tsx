@@ -787,15 +787,53 @@ function KamusGaul({
     localStorage.setItem('cianna_dictionary_bookmarked', String(newState));
   };
 
-  const categories = useMemo(() => ['Semua', ...new Set(dictionary.map(item => item.category))], [dictionary]);
+  const categories = useMemo(() => {
+    const rawCategories = [...new Set(dictionary.map(item => item.category))];
+    const priority = ['Harian', 'Medis/Darurat', 'Urgensi', 'Majikan/ART'];
+    
+    const sorted = rawCategories.sort((a, b) => {
+      const indexA = priority.indexOf(a);
+      const indexB = priority.indexOf(b);
+      
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+      if (indexA !== -1) return -1;
+      if (indexB !== -1) return 1;
+      return a.localeCompare(b);
+    });
 
-  const filteredData = useMemo(() => dictionary.filter(item => {
-    const matchesSearch = item.indo.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          item.mandarin.includes(searchTerm) || 
-                          item.pronunciation.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'Semua' || item.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  }), [searchTerm, selectedCategory, dictionary]);
+    return ['Semua', ...sorted];
+  }, [dictionary]);
+
+  const filteredData = useMemo(() => {
+    const filtered = dictionary.filter(item => {
+      const matchesSearch = item.indo.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                            item.mandarin.includes(searchTerm) || 
+                            item.pronunciation.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === 'Semua' || item.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+
+    // Sort filtered data by priority category if "Semua" is selected
+    if (selectedCategory === 'Semua') {
+      const priority = ['Harian', 'Medis/Darurat', 'Urgensi', 'Majikan/ART'];
+      return [...filtered].sort((a, b) => {
+        const indexA = priority.indexOf(a.category);
+        const indexB = priority.indexOf(b.category);
+        
+        if (indexA !== -1 && indexB !== -1) {
+          if (indexA !== indexB) return indexA - indexB;
+          return a.indo.localeCompare(b.indo);
+        }
+        if (indexA !== -1) return -1;
+        if (indexB !== -1) return 1;
+        
+        if (a.category !== b.category) return a.category.localeCompare(b.category);
+        return a.indo.localeCompare(b.indo);
+      });
+    }
+
+    return filtered;
+  }, [searchTerm, selectedCategory, dictionary]);
 
   const playAudio = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
