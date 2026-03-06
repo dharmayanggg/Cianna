@@ -360,6 +360,14 @@ export default function App() {
                   Indonesian Expat in Taiwan <span className="text-kr-accent opacity-70 ml-1">sejak 2023</span>
                 </div>
               </div>
+
+              <div className="flex flex-wrap items-center gap-2 mb-8 justify-center md:justify-start">
+                <span className="text-[10px] font-heading font-bold text-kr-text-light uppercase tracking-widest w-full md:w-auto mb-1 md:mb-0">Akses cepat:</span>
+                <a href="#product-1" className="text-[11px] font-heading font-bold px-4 py-1.5 bg-kr-mint/50 text-kr-text rounded-full hover:bg-kr-mint transition-all hover:scale-105 shadow-sm border border-kr-mint/30">Kamus Mandarin</a>
+                <a href="#product-2" className="text-[11px] font-heading font-bold px-4 py-1.5 bg-kr-blue/50 text-kr-text rounded-full hover:bg-kr-blue transition-all hover:scale-105 shadow-sm border border-kr-blue/30">Starterpack Taiwan</a>
+                <a href="#product-3" className="text-[11px] font-heading font-bold px-4 py-1.5 bg-kr-lilac/50 text-kr-text rounded-full hover:bg-kr-lilac transition-all hover:scale-105 shadow-sm border border-kr-lilac/30">Interview Agency</a>
+                <a href="#product-4" className="text-[11px] font-heading font-bold px-4 py-1.5 bg-kr-yellow/50 text-kr-text rounded-full hover:bg-kr-yellow transition-all hover:scale-105 shadow-sm border border-kr-yellow/30">Loker Taiwan</a>
+              </div>
               
               <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl leading-[1.2] mb-6 text-kr-text">
                 Kerja di Taiwan <br/>
@@ -1091,10 +1099,11 @@ const ProductCard = ({ product }: { product: Product, key?: any }) => {
 
   return (
     <motion.div 
+      id={`product-${product.id}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="bg-white rounded-3xl p-8 card-soft shadow-soft border border-kr-mint/50 relative flex flex-col h-full group"
+      className="bg-white rounded-3xl p-8 card-soft shadow-soft border border-kr-mint/50 relative flex flex-col h-full group scroll-mt-24"
     >
       <div className="flex justify-between items-start mb-6">
         <div className={`w-14 h-14 rounded-2xl ${colorClasses[color as keyof typeof colorClasses].bg} flex items-center justify-center text-kr-text shadow-inner-soft group-hover:scale-110 transition-transform`}>
