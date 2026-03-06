@@ -1237,12 +1237,20 @@ const WebbookAccess = ({ isGenerating, product, onUnlock }: { isGenerating: bool
         )}
 
         {step === 'success' && (
-          <button 
-            onClick={() => setStep('login')}
-            className="w-full py-4 bg-kr-text text-white rounded-xl font-heading font-bold shadow-soft hover:opacity-90 transition-all"
-          >
-            Lanjut ke Halaman Login
-          </button>
+          <div className="flex flex-col gap-3">
+            <button 
+              onClick={() => setStep('login')}
+              className="w-full py-4 bg-kr-accent text-white rounded-xl font-heading font-bold shadow-soft hover:opacity-90 transition-all"
+            >
+              Lanjut ke Halaman Login
+            </button>
+            <a 
+              href="https://cianna-tau.vercel.app"
+              className="w-full py-4 bg-kr-bg text-kr-text rounded-xl font-heading font-bold shadow-soft hover:bg-kr-mint/30 transition-all flex items-center justify-center gap-2"
+            >
+              Kembali ke Beranda Utama <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
         )}
 
         <button 
