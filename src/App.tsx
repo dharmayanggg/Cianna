@@ -1010,9 +1010,25 @@ function KamusGaul({
           <div className="text-4xl mb-4">🔍</div>
           <h3 className="font-heading font-bold text-xl text-kr-text">Frasa tidak ditemukan</h3>
           <p className="text-kr-text-light mb-6">Mau Ci Anna bantu carikan dengan AI?</p>
-          <div className="px-6 py-4 bg-kr-mint/20 rounded-2xl border border-kr-mint text-kr-text text-sm max-w-sm mx-auto">
-            Frasa belum tersedia. <br/>
-            <strong>Tips:</strong> Buka akses ke salah satu produk Ci Anna untuk menggunakan fitur tanya jawab AI sepuasnya! 🔓✨
+          
+          {isGenerating ? (
+            <div className="flex items-center justify-center gap-2 text-kr-accent animate-pulse">
+              <div className="w-2 h-2 rounded-full bg-current" />
+              <div className="w-2 h-2 rounded-full bg-current" />
+              <div className="w-2 h-2 rounded-full bg-current" />
+              <span className="text-sm font-bold">Ci Anna sedang mencari...</span>
+            </div>
+          ) : (
+            <button 
+              onClick={onGeminiSearch}
+              className="px-8 py-3 bg-kr-accent text-white rounded-full font-heading font-bold shadow-float hover:scale-105 transition-transform mb-6"
+            >
+              Cari dengan AI ✨
+            </button>
+          )}
+
+          <div className="mt-8 px-6 py-4 bg-kr-mint/20 rounded-2xl border border-kr-mint text-kr-text text-sm max-w-sm mx-auto">
+            <strong>Tips:</strong> Frasa yang dicari dengan AI akan otomatis tersimpan ke dalam kamus Ci Anna untuk dipelajari nanti! 🔓✨
           </div>
         </div>
       )}
