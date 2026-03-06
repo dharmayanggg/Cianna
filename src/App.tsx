@@ -399,9 +399,20 @@ export default function App() {
                 </div>
                 <div className="w-full md:w-2/3 text-center md:text-left">
                   <h2 className="font-heading font-bold text-2xl md:text-3xl mb-4 text-kr-text">Kenapa Bareng Ci Anna?</h2>
-                  <p className="text-kr-text-light mb-4 leading-relaxed">
+                  <p className="text-kr-text-light mb-6 leading-relaxed">
                     Dulu waktu pertama kali ke Taiwan sebagai Pekerja Migran Indonesia (PMI), aku sempet homesick and bingung ngadepin budaya baru. Susah ngobrol sama atasan/majikan dan pusing urusan dokumen kerja.
                   </p>
+
+                  <div className="bg-kr-yellow/20 border-2 border-kr-yellow rounded-2xl p-5 mb-6 transform -rotate-1 hover:rotate-0 transition-transform duration-300 shadow-sm relative">
+                    <div className="absolute -top-3 -right-3 text-2xl animate-bounce">💸</div>
+                    <p className="font-heading font-bold text-kr-text text-lg leading-tight mb-2">
+                      Tau nggak? Gaji rata-rata PMI itu <span className="text-white bg-kr-accent px-2 py-1 rounded-lg shadow-sm inline-block transform -skew-x-12">24.000 - 35.000 NTD</span>
+                    </p>
+                    <p className="text-sm text-kr-text-light leading-relaxed">
+                      Itu setara <strong>Rp 12 - 17 Juta per bulan</strong> lho! Tergantung skill & pengalamanmu. Sayang banget kan kalau kesempatan cuan segede ini lewat cuma karena kamu kurang persiapan? 😱
+                    </p>
+                  </div>
+
                   <p className="text-kr-text-light leading-relaxed">
                     Nah, semua modul dan info di bawah ini aku susun pakai <strong>bahasa yang santai, mudah dipahami, dan dari pengalaman asli</strong>. Biar kamu nggak perlu ngulangin kesulitanku dulu, dan bisa langsung fokus cari cuan dengan aman, sesuai standar pemerintah! 🌸
                   </p>
