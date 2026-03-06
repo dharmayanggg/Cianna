@@ -1,5 +1,6 @@
 import { useState, useEffect, ReactNode, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Analytics } from '@vercel/analytics/react';
 import StarterPackContent from './components/StarterPackContent';
 import InterviewGuideContent from './components/InterviewGuideContent';
 import CurrencyCalculator from './components/CurrencyCalculator';
@@ -645,6 +646,7 @@ export default function App() {
       {currentPage === 'content' && (
         <AIChatbox mode={unlockedContent?.product.id === 1 ? 'dictionary' : 'general'} />
       )}
+      <Analytics />
     </div>
   );
 }
