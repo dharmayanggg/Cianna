@@ -139,9 +139,22 @@ export default function App() {
 
   const fetchDictionary = async () => {
     try {
-      const res = await fetch('/api/dictionary');
-      const data = await res.json();
-      setDictionary(data);
+      if (!supabase) {
+        // Fallback to local API if supabase not configured (for dev)
+        const res = await fetch('/api/dictionary');
+        const data = await res.json();
+        setDictionary(data);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('dictionary')
+        .select('*')
+        .order('category', { ascending: true })
+        .order('indo', { ascending: true });
+
+      if (error) throw error;
+      setDictionary(data || []);
     } catch (err) {
       console.error(err);
     } finally {
@@ -188,15 +201,25 @@ export default function App() {
             throw new Error("Incomplete data from AI");
           }
 
-          // Save to backend
-          const saveRes = await fetch('/api/dictionary', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newPhrase)
-          });
-
-          if (!saveRes.ok) {
-            throw new Error("Failed to save to dictionary");
+          // Save to Supabase or Local API
+          if (supabase) {
+            const { error: saveError } = await supabase
+              .from('dictionary')
+              .insert([{ 
+                category: newPhrase.category || "General", 
+                indo: newPhrase.indo, 
+                mandarin: newPhrase.mandarin, 
+                pronunciation: newPhrase.pronunciation || "",
+                is_custom: true 
+              }]);
+            if (saveError) throw saveError;
+          } else {
+            const saveRes = await fetch('/api/dictionary', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(newPhrase)
+            });
+            if (!saveRes.ok) throw new Error("Failed to save to dictionary");
           }
 
           // Refresh
@@ -600,6 +623,12 @@ export default function App() {
 }
 
 import { GoogleGenAI, Modality } from "@google/genai";
+import { createClient } from '@supabase/supabase-js';
+
+// Supabase Client Initialization
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const supabase = (supabaseUrl && supabaseAnonKey) ? createClient(supabaseUrl, supabaseAnonKey) : null;
 
 // Initialize Gemini
 const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
@@ -1048,23 +1077,39 @@ const WebbookAccess = ({ isGenerating, product, onUnlock }: { isGenerating: bool
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/validate-license', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phoneNumber: phone, licenseKey: key, productId: pid })
-      });
-      const data = await res.json();
-      if (data.valid) {
+      let isValid = false;
+
+      if (supabase) {
+        const { data, error: supabaseError } = await supabase
+          .from('licenses')
+          .select('*')
+          .eq('phone_number', phone)
+          .eq('license_key', key)
+          .eq('product_id', pid)
+          .single();
+        
+        if (data) isValid = true;
+      } else {
+        const res = await fetch('/api/validate-license', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phoneNumber: phone, licenseKey: key, productId: pid })
+        });
+        const data = await res.json();
+        if (data.valid) isValid = true;
+      }
+
+      if (isValid) {
         localStorage.setItem(`cianna_license_${pid}`, key);
         onUnlock({ 
           product: product!, 
           content: { title: product!.title, body: `Selamat datang di materi eksklusif ${product!.title} Ci Anna...` } 
         });
       } else {
-        setError(data.error || 'Kode atau No WA salah untuk produk ini');
+        setError('Kode atau No WA salah untuk produk ini');
       }
     } catch (err) {
-      setError('Terjadi kesalahan koneksi');
+      setError('Terjadi kesalahan koneksi atau database');
     } finally {
       setLoading(false);
     }
@@ -1074,7 +1119,6 @@ const WebbookAccess = ({ isGenerating, product, onUnlock }: { isGenerating: bool
     setLoading(true);
     setError('');
     
-    // Check if they are trying to generate for a different number
     const savedPhone = localStorage.getItem('cianna_phone');
     if (savedPhone && savedPhone !== phoneNumber) {
       setError(`Kamu hanya bisa generate untuk nomor ${savedPhone}. Jika lupa kode, silakan hubungi admin.`);
@@ -1083,21 +1127,49 @@ const WebbookAccess = ({ isGenerating, product, onUnlock }: { isGenerating: bool
     }
 
     try {
-      const res = await fetch('/api/generate-license', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phoneNumber, productId: product.id, secretToken: 'CIANNA_SECRET_2023' })
-      });
-      const data = await res.json();
-      if (data.licenseKey) {
-        setLicenseKey(data.licenseKey);
+      let generatedKey = '';
+
+      if (supabase) {
+        // Check if exists
+        const { data: existing } = await supabase
+          .from('licenses')
+          .select('license_key')
+          .eq('phone_number', phoneNumber)
+          .eq('product_id', product.id)
+          .single();
+        
+        if (existing) {
+          generatedKey = existing.license_key;
+        } else {
+          // Generate new
+          const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
+          generatedKey = `ANNA${product.id}-${randomPart}`;
+          
+          const { error: insertError } = await supabase
+            .from('licenses')
+            .insert([{ phone_number: phoneNumber, product_id: product.id, license_key: generatedKey }]);
+          
+          if (insertError) throw insertError;
+        }
+      } else {
+        const res = await fetch('/api/generate-license', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phoneNumber, productId: product.id, secretToken: 'CIANNA_SECRET_2023' })
+        });
+        const data = await res.json();
+        if (data.licenseKey) generatedKey = data.licenseKey;
+        else throw new Error(data.error || 'Gagal generate');
+      }
+
+      if (generatedKey) {
+        setLicenseKey(generatedKey);
         localStorage.setItem('cianna_phone', phoneNumber);
         setStep('success');
-      } else {
-        setError(data.error || 'Gagal generate kode');
       }
     } catch (err) {
-      setError('Terjadi kesalahan koneksi');
+      console.error(err);
+      setError('Terjadi kesalahan koneksi. Pastikan database sudah terhubung.');
     } finally {
       setLoading(false);
     }
