@@ -54,7 +54,7 @@ const PRODUCTS: Product[] = [
     title: "Kamus Gaul Mandarin",
     description: "Biar ngobrol sama Akong & Ama makin luwes~ Isinya frasa sehari-hari yang real dipakai majikan. Nggak kaku kayak buku pelajaran, lengkap dengan cara bacanya! 🗣️",
     benefits: ["500+ Frasa Gaul", "Audio Cara Baca", "Fitur Chatbot Frasa", "Update Selamanya"],
-    price: "Rp 45.000",
+    price: "Rp 27.000",
     originalPrice: "Rp 99.000",
     buyUrl: "http://lynk.id/cianna/kv6v8r78d7dr/checkout"
   },
@@ -66,7 +66,7 @@ const PRODUCTS: Product[] = [
     title: "Starter Pack ke Taiwan",
     description: "Bawa barang apa aja ya dari Indo? Yuk siapkan koper dan mentalmu dengan tenang. Ada bocoran budaya kerja di Taiwan biar kamu nggak culture shock! 🧳",
     benefits: ["Checklist Koper", "Mental Health", "Budaya Taiwan", "Tools & Kalkulator", "Larangan & Denda", "Life Hacks", "Fitur Chatbot"],
-    price: "Rp 35.000",
+    price: "Rp 22.000",
     originalPrice: "Rp 65.000",
     buyUrl: "http://lynk.id/cianna/w9v9o6zn9n2e/checkout"
   },
@@ -78,7 +78,7 @@ const PRODUCTS: Product[] = [
     title: "Rahasia Lolos Interview Agency",
     description: "Tips elegan jawab pertanyaan menjebak dari agency dan calon majikan. Aku ajarin cara bikin kesan pertama yang manis biar kamu cepet dapet job idaman. ✨",
     benefits: ["Simulasi Interview", "Body Language Tips", "Q&A Terpopuler", "Template Perkenalan"],
-    price: "Rp 45.000",
+    price: "Rp 25.000",
     originalPrice: "Rp 65.000",
     buyUrl: "http://lynk.id/cianna/kn6n5e7nde90/checkout"
   },
